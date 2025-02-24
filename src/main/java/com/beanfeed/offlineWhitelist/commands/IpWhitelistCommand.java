@@ -10,12 +10,14 @@ public class IpWhitelistCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         var mode = invocation.arguments()[0];
-        var ip = invocation.arguments()[1];
+        String ip;
         switch (mode) {
             case "add":
+                ip = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.addWhitelist(ip);
                 break;
             case "remove":
+                ip = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.removeWhitelist(ip);
                 break;
             case "list":

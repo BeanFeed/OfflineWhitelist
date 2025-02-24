@@ -10,12 +10,14 @@ public class FloodgateWhitelist implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         var mode = invocation.arguments()[0];
-        var name = invocation.arguments()[1];
+        String name;
         switch (mode) {
             case "add":
+                name = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.addFloodgateWhitelist(name);
                 break;
             case "remove":
+                name = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.removeFloodgateWhitelist(name);
                 break;
             case "list":

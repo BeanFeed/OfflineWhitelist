@@ -22,12 +22,14 @@ public class WhitelistCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         var mode = invocation.arguments()[0];
-        var username = invocation.arguments()[1];
+        String username;
         switch (mode) {
             case "add":
+                username = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.addUUIDWhitelist(getUserProfile(username));
                 break;
             case "remove":
+                username = invocation.arguments()[1];
                 OfflineWhitelist.whitelistConfig.removeUUIDWhitelist(getUserProfile(username));
                 break;
             case "list":
