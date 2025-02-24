@@ -96,5 +96,6 @@ public class WhitelistCommand implements SimpleCommand {
         } catch (IOException e) {
             return null;
         }
+        return null;
     }
 }
