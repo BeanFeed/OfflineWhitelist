@@ -27,7 +27,7 @@ public class FloodgateWhitelist implements SimpleCommand {
                 break;
             default:
                 // Display usage
-                invocation.source().sendMessage(Component.text("Usage: /ipwhitelist <add|remove|list> <ip>"));
+                invocation.source().sendMessage(Component.text("Usage: /floodgatewhitelist <add|remove|list> <ip>"));
                 break;
         }
     }

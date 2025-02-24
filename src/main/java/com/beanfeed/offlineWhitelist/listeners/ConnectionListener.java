@@ -3,7 +3,9 @@ package com.beanfeed.offlineWhitelist.listeners;
 import com.beanfeed.offlineWhitelist.OfflineWhitelist;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import net.kyori.adventure.text.Component;
 
@@ -71,5 +73,14 @@ public class ConnectionListener {
 
         //event.setResult(PreLoginEvent.PreLoginComponentResult.forceOfflineMode());
 
+    }
+
+    @Subscribe
+    public void onPlayerAuthenticated(LoginEvent event) throws IOException {
+        if(event.getPlayer().isOnlineMode()) {
+            if(OfflineWhitelist.whitelistConfig.getUUIDWhitelist().stream().noneMatch(userProfile -> userProfile.UUID.equals(event.getPlayer().getUniqueId().toString().replace("-", "")))) {
+                event.setResult(ResultedEvent.ComponentResult.denied(Component.text("You are not whitelisted")));
+            }
+        }
     }
 }
