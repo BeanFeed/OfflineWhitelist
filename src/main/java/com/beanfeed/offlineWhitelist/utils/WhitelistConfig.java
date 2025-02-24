@@ -30,11 +30,20 @@ public class WhitelistConfig {
             new File(path + "/whitelist.yml").createNewFile();
             whitelist = new HashMap<>();
             whitelist.put("whitelist", new ArrayList<String>());
+            whitelist.put("floodgateWhitelist", new ArrayList<String>());
             this.saveConfig();
         }
         //Load the whitelist.yml file
         Yaml yaml = new Yaml();
         this.whitelist =  yaml.load(new FileInputStream(new File(path + "/whitelist.yml")));
+        if(!whitelist.containsKey("whitelist")) {
+            whitelist.put("whitelist", new ArrayList<String>());
+            this.saveConfig();
+        }
+        if(!whitelist.containsKey("floodgateWhitelist")) {
+            whitelist.put("floodgateWhitelist", new ArrayList<String>());
+            this.saveConfig();
+        }
     }
 
     private void saveConfig() throws IOException {
@@ -63,8 +72,29 @@ public class WhitelistConfig {
         }
     }
 
+    public void addFloodgateWhitelist(String ipAddress) {
+        ((ArrayList<String>)whitelist.get("floodgateWhitelist")).add(ipAddress);
+        try {
+            this.saveConfig();
+        } catch (IOException e) {
+        }
+    }
+
+    public void removeFloodgateWhitelist(String ipAddress) {
+        ((ArrayList<String>)whitelist.get("floodgateWhitelist")).remove(ipAddress);
+        try {
+            this.saveConfig();
+        } catch (IOException e) {
+        }
+    }
+
     public ArrayList<String> getWhitelist() throws IOException {
         this.loadConfig();
         return new ArrayList<>((ArrayList<String>)whitelist.get("whitelist"));
+    }
+
+    public ArrayList<String> getFloodgateWhitelist() throws IOException {
+        this.loadConfig();
+        return new ArrayList<>((ArrayList<String>)whitelist.get("floodgateWhitelist"));
     }
 }

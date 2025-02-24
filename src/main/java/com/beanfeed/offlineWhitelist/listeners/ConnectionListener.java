@@ -20,6 +20,14 @@ public class ConnectionListener {
 
     @Subscribe
     public void onPlayerConnect(PreLoginEvent event) {
+        if(event.getResult().isForceOfflineMode()) {
+            try {
+                if(OfflineWhitelist.whitelistConfig.getFloodgateWhitelist().contains(event.getUsername()))
+                return;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         try {
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + event.getUsername());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

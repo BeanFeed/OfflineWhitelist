@@ -1,5 +1,6 @@
 package com.beanfeed.offlineWhitelist;
 
+import com.beanfeed.offlineWhitelist.commands.FloodgateWhitelist;
 import com.beanfeed.offlineWhitelist.commands.IpWhitelistCommand;
 import com.beanfeed.offlineWhitelist.listeners.ConnectionListener;
 import com.beanfeed.offlineWhitelist.utils.WhitelistConfig;
@@ -38,6 +39,11 @@ public class OfflineWhitelist {
         CommandMeta meta = manager.metaBuilder("ipwhitelist")
                 .plugin(this)
                 .build();
+        CommandMeta floodgateMeta = manager.metaBuilder("fgwhitelist")
+                .plugin(this)
+                .build();
+
         manager.register(meta, new IpWhitelistCommand());
+        manager.register(floodgateMeta, new FloodgateWhitelist());
     }
 }
